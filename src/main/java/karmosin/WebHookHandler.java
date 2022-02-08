@@ -18,7 +18,7 @@ public interface WebHookHandler {
      * @return
      * @throws Exception
      */
-    public ContinuousIntegrationJob parseEventhandle(String target, Request baseRequest, HttpServletRequest request,
+    public ContinuousIntegrationJob parseEvent(String target, Request baseRequest, HttpServletRequest request,
             HttpServletResponse response) throws IOException, ServletException;
 
     /**
