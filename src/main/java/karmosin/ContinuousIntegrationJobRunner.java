@@ -9,6 +9,9 @@ public interface ContinuousIntegrationJobRunner {
         public ContinuousIntegrationJobTaskOutput cloneRepo(ContinuousIntegrationJob continuousIntegrationJob,
                         String targetLocation) throws Exception;
 
+        public ContinuousIntegrationJobTaskOutput runCheck(ContinuousIntegrationJob continuousIntegrationJob,
+                        String targetLocation) throws Exception;
+
         public ContinuousIntegrationJobTaskOutput runBuild(ContinuousIntegrationJob continuousIntegrationJob,
                         String targetLocation) throws Exception;
 
