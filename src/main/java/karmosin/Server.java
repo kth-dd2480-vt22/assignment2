@@ -1,4 +1,4 @@
-package karmoisin;
+package karmosin;
 
 public interface Server {
 

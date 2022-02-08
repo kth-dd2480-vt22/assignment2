@@ -1,4 +1,4 @@
-package karmoisin;
+package karmosin;
 
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;

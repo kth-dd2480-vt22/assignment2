@@ -1,4 +1,4 @@
-package karmoisin;
+package karmosin;
 
 import java.net.URL;
 
