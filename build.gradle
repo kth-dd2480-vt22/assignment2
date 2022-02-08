@@ -14,7 +14,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.arteam:embedded-http-server:1.1'
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
+    implementation 'org.eclipse.jetty:jetty-server:11.0.8'
     testImplementation 'junit:junit:4.+'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
