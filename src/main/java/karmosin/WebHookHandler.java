@@ -1,7 +1,7 @@
 package karmosin;
 
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import com.github.arteam.embedhttp.HttpRequest;
+import com.github.arteam.embedhttp.HttpResponse;
 
 public interface WebHookHandler {
     /**
