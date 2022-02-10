@@ -44,6 +44,7 @@ public class WebHookHandler implements karmosin.WebHookHandler {
             job.commitHash = commitHash;
             job.pusherName = pusherName;
             job.pusherEmail = pusherEmail;
+            job.jobID = request.getHeader("X-GitHub-Delivery");
         }
         return job;
     }
