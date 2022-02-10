@@ -14,12 +14,22 @@ repositories {
 }
 
 dependencies {
+    implementation 'net.sargue:mailgun:1.10.0'
+    implementation 'com.mashape.unirest:unirest-java:1.4.9'
     implementation 'javax.servlet:javax.servlet-api:4.0.1'
     implementation 'org.eclipse.jetty:jetty-server:10.0.8'
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    implementation 'org.json:json:20211205'
+    implementation 'org.springframework:spring-test:5.3.15'
+    implementation 'io.github.cdimascio:java-dotenv:3.1.7'
 }
+
+test {
+    useJUnitPlatform()
+}
+
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 
