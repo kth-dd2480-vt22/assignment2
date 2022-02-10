@@ -41,7 +41,7 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
         response.setStatus(HttpServletResponse.SC_OK);
         baseRequest.setHandled(true);
 
-        if (job == null){
+        if (job == null) {
             return;
         }
 
@@ -60,6 +60,7 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
                     System.out.println(output.StandardOutput.toString());
                     writeOutput(jobName, "clone", output);
                     if (output.exitCode != 0) {
+                        handler.responseEvent(target, baseRequest, request, response, job);
                         emailer.emailResult(job);
                         return;
                     }
@@ -70,6 +71,7 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
                     System.out.println(output.StandardOutput.toString());
                     writeOutput(jobName, "check", output);
                     if (output.exitCode != 0) {
+                        handler.responseEvent(target, baseRequest, request, response, job);
                         emailer.emailResult(job);
                         return;
                     }
@@ -80,6 +82,7 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
                     System.out.println(output.StandardOutput.toString());
                     writeOutput(jobName, "test", output);
                     if (output.exitCode != 0) {
+                        handler.responseEvent(target, baseRequest, request, response, job);
                         emailer.emailResult(job);
                         return;
                     }
@@ -90,11 +93,14 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
                     System.out.println(output.StandardOutput.toString());
                     writeOutput(jobName, "build", output);
                     if (output.exitCode != 0) {
+                        handler.responseEvent(target, baseRequest, request, response, job);
                         emailer.emailResult(job);
                         return;
                     }
 
                     job.succeeded = true;
+
+                    handler.responseEvent(target, baseRequest, request, response, job);
 
                     emailer.emailResult(job);
 
