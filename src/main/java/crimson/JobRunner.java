@@ -108,7 +108,6 @@ public class JobRunner implements ContinuousIntegrationJobRunner {
         jobTaskOutput.StandardOutput = baos.toString();
         System.out.flush();
         System.setOut(old);
-        assert jobTaskOutput.exitCode == 0;
         return jobTaskOutput;
     }
 }
