@@ -61,6 +61,11 @@ public class WebHookHandler implements karmosin.WebHookHandler {
      */
     @Override
     public void responseEvent(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response, ContinuousIntegrationJob continuousIntegrationJob) throws IOException, ServletException {
-
+        CommitStatusHandler commitStatusHandler = new CommitStatusHandler();
+        String state = continuousIntegrationJob.succeeded ? "success" : "failure";
+        String description = continuousIntegrationJob.succeeded ? "Build succeeded" : "Build failed";
+        String targetUrl = "https://www.github.com";
+        String commitHash = continuousIntegrationJob.commitHash;
+        commitStatusHandler.setStatus(state, description, targetUrl, commitHash);
     }
 }

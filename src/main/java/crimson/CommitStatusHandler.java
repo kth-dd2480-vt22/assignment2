@@ -1,5 +1,4 @@
 package crimson;
-import io.github.cdimascio.dotenv.Dotenv;
 import kotlin.Pair;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
@@ -12,18 +11,26 @@ import java.io.IOException;
 import java.util.*;
 
 public class CommitStatusHandler {
-    static Dotenv dotenv = Dotenv.load();
 
     public static final String ERROR = "error";
     public static final String FAILURE = "failure";
     public static final String PENDING = "pending";
     public static final String SUCCESS = "success";
 
-    private static final String USER_NAME = "641bill";
-    static final String GITHUB_TOKEN = dotenv.get("GITHUB_TOKEN");
-    private static final String API_URL = "https://api.github.com/repos/kth-dd2480-vt22/assignment2/statuses/";
+    private String USER_NAME;
+    private String GITHUB_TOKEN;
+    private String API_URL;
+    private String context;
 
-    private static final String context = "Group13-CI";
+    public CommitStatusHandler() {
+    }
+
+    public CommitStatusHandler(String USER_NAME, String GITHUB_TOKEN, String API_URL, String context) {
+        this.USER_NAME = USER_NAME;
+        this.GITHUB_TOKEN = GITHUB_TOKEN;
+        this.API_URL = API_URL;
+        this.context = context;
+    }
 
     /**
      * Set the commit status on GitHub to be the given state along with other arguments,
