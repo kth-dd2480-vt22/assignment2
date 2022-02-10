@@ -58,7 +58,12 @@ public class CommitStatusHandler {
         for (Pair<String, String> pair : pairs) {
             joiner.add("\"" + pair.getFirst() + "\": \"" + pair.getSecond() + "\"");
         }
-        post.setEntity(new StringEntity("{" + joiner + "}"));
+
+        String postBody = "{" + joiner + "}";
+        System.out.println(API_URL + commitHash);
+        System.out.println(postBody);
+        
+        post.setEntity(new StringEntity(postBody));
 
         HttpResponse response = client.execute(post);
         return response.getEntity();
