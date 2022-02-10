@@ -1,6 +1,9 @@
 package crimson;
 
+import org.eclipse.jetty.server.CustomRequestLog;
+import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.server.Slf4jRequestLogWriter;
 import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 
@@ -31,11 +34,12 @@ public class Server implements karmosin.Server {
 
     @Override
     public void start(int port) {
-        server.setHandler(handler);
-
-        ServerConnector connector = new ServerConnector(server);
+        ServerConnector connector = new ServerConnector(server, new HttpConnectionFactory());
         connector.setPort(port);
         server.addConnector(connector);
+        server.setRequestLog(new CustomRequestLog(new Slf4jRequestLogWriter(), CustomRequestLog.EXTENDED_NCSA_FORMAT));
+
+        server.setHandler(handler);
 
         try {
             server.start();
