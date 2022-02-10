@@ -10,10 +10,7 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.InvalidRemoteException;
-import org.eclipse.jgit.api.errors.TransportException;
+
 
 /**
  * A class that handles cloning, checking, building and testing of the repo for an incoming CI-job.
@@ -26,30 +23,19 @@ public class JobRunner implements ContinuousIntegrationJobRunner {
      * @param targetLocation the location to where the repo will be cloned
      * @return a ContinuousIntegrationJobTaskOutput object containing information about the cloning process
      */
-    public ContinuousIntegrationJobTaskOutput cloneRepo(ContinuousIntegrationJob continuousIntegrationJob, String targetLocation) {
-        ContinuousIntegrationJobTaskOutput jobTaskOutput = new ContinuousIntegrationJobTaskOutput();
-        java.io.ByteArrayOutputStream baos = new java.io.ByteArrayOutputStream();
-        java.io.PrintStream ps = new java.io.PrintStream(baos);
-        java.io.PrintStream old = System.out;
-        System.setOut(ps);
-        try {
-            Git.cloneRepository()
-                .setURI(String.valueOf(continuousIntegrationJob.repoGitUrl))
-                .setDirectory(new File(targetLocation))
-                .setBranchesToClone(List.of(continuousIntegrationJob.gitRefs))
-                .setBranch(continuousIntegrationJob.gitRefs)
-                .call();
-            continuousIntegrationJob.succeeded = true;
-        }
-        catch (GitAPIException e){
-            continuousIntegrationJob.succeeded = false;
-            jobTaskOutput.exitCode = -1;
-            jobTaskOutput.ErrorOutput = String.valueOf(e);
-        }
-        jobTaskOutput.StandardOutput = baos.toString();
-        System.out.flush();
-        System.setOut(old);
-        return jobTaskOutput;
+    public ContinuousIntegrationJobTaskOutput cloneRepo(ContinuousIntegrationJob continuousIntegrationJob, String targetLocation) throws Exception {
+        String cmd = "git clone " + continuousIntegrationJob.repoGitUrl + " . ";
+        ContinuousIntegrationJobTaskOutput cloneOutput = runCommand(continuousIntegrationJob, targetLocation, cmd);
+
+        cmd = "git checkout " + continuousIntegrationJob.commitHash;
+        ContinuousIntegrationJobTaskOutput checkoutOutput = runCommand(continuousIntegrationJob, targetLocation, cmd);
+
+        ContinuousIntegrationJobTaskOutput output = new ContinuousIntegrationJobTaskOutput();
+        output.exitCode = cloneOutput.exitCode + checkoutOutput.exitCode;
+        output.StandardOutput = cloneOutput.StandardOutput + "\n" + checkoutOutput.StandardOutput;
+        output.ErrorOutput = cloneOutput.ErrorOutput + "\n" + checkoutOutput.ErrorOutput;
+
+        return output;
     }
 
     /**
