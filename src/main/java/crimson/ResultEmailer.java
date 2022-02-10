@@ -25,14 +25,14 @@ public class ResultEmailer implements karmosin.ResultEmailer{
         this.API_KEY = API_KEY;
     }
 
-    public boolean emailResult(ContinuousIntegrationJob continuousIntegrationJob) {
+    public void emailResult(ContinuousIntegrationJob continuousIntegrationJob) {
 
         this.pusherEmail = continuousIntegrationJob.pusherEmail;
         this.succeeded = continuousIntegrationJob.succeeded;
         this.hash = continuousIntegrationJob.commitHash;
 
         if (YOUR_DOMAIN_NAME == null || API_KEY == null) {
-            return false;
+            return;
         } else {
             try {
                 JsonNode js = sendSimpleMessage();
@@ -40,7 +40,7 @@ public class ResultEmailer implements karmosin.ResultEmailer{
             } catch (UnirestException e) {
                 e.printStackTrace();
             }
-            return true;
+            return;
         }
     }
 

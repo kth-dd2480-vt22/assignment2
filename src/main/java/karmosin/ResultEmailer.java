@@ -8,5 +8,5 @@ public interface ResultEmailer {
      * 
      * @param continuousIntegrationJob
      */
-    public boolean emailResult(ContinuousIntegrationJob continuousIntegrationJob);
+    public void emailResult(ContinuousIntegrationJob continuousIntegrationJob);
 }
