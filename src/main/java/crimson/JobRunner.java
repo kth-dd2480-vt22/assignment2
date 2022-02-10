@@ -4,8 +4,11 @@ import karmosin.ContinuousIntegrationJob;
 import karmosin.ContinuousIntegrationJobRunner;
 import karmosin.ContinuousIntegrationJobTaskOutput;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -91,23 +94,22 @@ public class JobRunner implements ContinuousIntegrationJobRunner {
     public ContinuousIntegrationJobTaskOutput runCommand(ContinuousIntegrationJob continuousIntegrationJob,
                                                          String targetLocation, String command) throws Exception{
         ContinuousIntegrationJobTaskOutput jobTaskOutput = new ContinuousIntegrationJobTaskOutput();
-        java.io.ByteArrayOutputStream baos = new java.io.ByteArrayOutputStream();
-        java.io.PrintStream ps = new java.io.PrintStream(baos);
-        java.io.PrintStream old = System.out;
-        System.setOut(ps);
+ 
         ProcessBuilder builder = new ProcessBuilder();
         builder.command(command.split(" "));
         builder.directory(new File(targetLocation));
         Process process = builder.start();
         int exitCode = process.waitFor();
         jobTaskOutput.exitCode = exitCode;
-        if (exitCode != 0 ) {
-            jobTaskOutput.ErrorOutput = String.valueOf(process.getErrorStream());
-        }
+
+        BufferedReader stdOutput = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        BufferedReader errOutput = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+
+        jobTaskOutput.StandardOutput = stdOutput.lines().collect(Collectors.joining());
+        jobTaskOutput.ErrorOutput = errOutput.lines().collect(Collectors.joining());
+        
         continuousIntegrationJob.succeeded = jobTaskOutput.exitCode == 0;
-        jobTaskOutput.StandardOutput = baos.toString();
-        System.out.flush();
-        System.setOut(old);
+
         return jobTaskOutput;
     }
 }
