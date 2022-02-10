@@ -96,7 +96,7 @@ public class JobRunner implements ContinuousIntegrationJobRunner {
         java.io.PrintStream old = System.out;
         System.setOut(ps);
         ProcessBuilder builder = new ProcessBuilder();
-        builder.command(command);
+        builder.command(command.split(" "));
         builder.directory(new File(targetLocation));
         Process process = builder.start();
         int exitCode = process.waitFor();
