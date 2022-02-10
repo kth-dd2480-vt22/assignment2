@@ -11,6 +11,11 @@ to automatically test a repository each time a new push event occurs.
 ##How to use
 
 ##Team
+Currently, we've identified ourselves being in the state of 'Performance'. This means that the team is meeting its commitments,
+continuously adapting to changing contexts, as well as identifying and addressing problems without outside help. The work
+is efficient with minimal rework, and because of clear and recurring meetings we are avoiding unnecessary rework/wasted work.
+Everyone on the team is taking responsibility for their own work and making sure that internal deadlines are met. If any team member
+is stuck on any particular issue, the team is notified and a solution is created together. 
 
 ##Contributions
 
