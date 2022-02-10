@@ -43,3 +43,5 @@ is stuck on any particular issue, the team is notified and a solution is created
 #### Filip Bäck
 
 #### Tobias Gabi Goobar
+
+Implemented the JobRunner class which handles cloning, checking, building and testing of the repo along with unittests. Also wrote the "Functionality"-part of the README
