@@ -4,7 +4,8 @@ import karmosin.WebHookHandler;
 
 public class Main {
     public static void main(String[] args) {
-        WebHookHandler githubWebHooker = new crimson.WebHookHandler();
+        WebHookHandler githubWebHooker = new crimson.WebHookHandler(System.getenv("GITHUB_USERNAME"),
+                System.getenv("GITHUB_REPOSTATUSURL"), System.getenv("GITHUB_TOKEN"));
         ContinuousIntegrationJobRunner runner = new crimson.JobRunner();
 
         String emailDomain = System.getenv("MAILGUN_DOMAIN");
