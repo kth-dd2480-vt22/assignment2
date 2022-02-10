@@ -43,7 +43,7 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
 
         Runnable r = new Runnable() {
             public void run() {
-                String jobName = "";
+                String jobName = job.jobID;
 
                 try {
                     String tmpdir = Files.createTempDirectory("ci_job").toFile().getAbsolutePath();
