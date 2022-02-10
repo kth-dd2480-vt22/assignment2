@@ -48,7 +48,7 @@ public class WebHookHandler implements karmosin.WebHookHandler {
             URL repoUrl = new URL(url);
             JSONArray commits = json.getJSONArray("commits");
             JSONObject commit = commits.getJSONObject(0);
-            String commitHash = commit.getString("id");
+            String commitHash = json.getString("after");
             String pusherName = commit.getJSONObject("author").getString("name");
             String pusherEmail = commit.getJSONObject("author").getString("email");
             job.gitRefs = gitRef;

@@ -43,7 +43,7 @@ public class WebHookHandlerTests {
 
         assertEquals(job.repoGitUrl.toString(), "https://github.com/Codertocat/Hello-World");
         assertEquals(job.gitRefs, "test_ref");
-        assertEquals(job.commitHash, "12345");
+        assertEquals(job.commitHash, "test_after");
         assertEquals(job.pusherName, "John Doe");
         assertEquals(job.pusherEmail, "123@kth.se");
     }
