@@ -56,6 +56,8 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
 
                     output = runner.cloneRepo(job, tmpdir);
                     System.out.println("clone: " + output.exitCode);
+                    System.out.println(output.ErrorOutput);
+                    System.out.println(output.StandardOutput.toString());
                     writeOutput(jobName, "clone", output);
                     if (output.exitCode != 0) {
                         emailer.emailResult(job);
@@ -64,22 +66,28 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
 
                     output = runner.runCheck(job, tmpdir);
                     System.out.println("check: " + output.exitCode);
+                    System.out.println(output.ErrorOutput);
+                    System.out.println(output.StandardOutput.toString());
                     writeOutput(jobName, "check", output);
                     if (output.exitCode != 0) {
                         emailer.emailResult(job);
                         return;
                     }
 
-                    output = runner.cloneRepo(job, tmpdir);
+                    output = runner.runTest(job, tmpdir);
                     System.out.println("test: " + output.exitCode);
+                    System.out.println(output.ErrorOutput);
+                    System.out.println(output.StandardOutput.toString());
                     writeOutput(jobName, "test", output);
                     if (output.exitCode != 0) {
                         emailer.emailResult(job);
                         return;
                     }
 
-                    output = runner.cloneRepo(job, tmpdir);
+                    output = runner.runBuild(job, tmpdir);
                     System.out.println("build: " + output.exitCode);
+                    System.out.println(output.ErrorOutput);
+                    System.out.println(output.StandardOutput.toString());
                     writeOutput(jobName, "build", output);
                     if (output.exitCode != 0) {
                         emailer.emailResult(job);
