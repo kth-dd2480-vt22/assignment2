@@ -50,7 +50,7 @@ public class WebHookHandlerTests {
 
     @Test
     public void invalidTestParsing() throws ServletException, IOException {
-        WebHookHandler handler = new WebHookHandler();
+        WebHookHandler handler = new WebHookHandler("", "", "");
         MockHttpServletRequest request = new MockHttpServletRequest();
         JSONObject obj = new JSONObject();
         JSONObject repo = new JSONObject();
