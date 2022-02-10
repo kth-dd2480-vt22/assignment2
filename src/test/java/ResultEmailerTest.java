@@ -1,21 +1,17 @@
-import com.mashape.unirest.http.exceptions.UnirestException;
 import crimson.ResultEmailer;
 import org.junit.jupiter.api.Test;
-
+import karmosin.ContinuousIntegrationJob;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ResultEmailerTest {
 
     @Test
     public void testEmailer(){
-
         ResultEmailer re = new ResultEmailer();
-        re.pusherEmail = "filiplarsback@gmail.com";
-        try{
-            re.sendSimpleMessage();
-            }catch(UnirestException e){
-            e.printStackTrace();
-        }
-
+        ContinuousIntegrationJob job = new ContinuousIntegrationJob();
+        job.pusherEmail = "filiplarsback@gmail.com";
+        job.succeeded = true;
+        assertFalse(re.emailResult(job));
     }
 
 }
