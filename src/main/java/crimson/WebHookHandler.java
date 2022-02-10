@@ -75,7 +75,7 @@ public class WebHookHandler implements karmosin.WebHookHandler {
     public void responseEvent(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response, ContinuousIntegrationJob continuousIntegrationJob) throws IOException, ServletException {
         String state = continuousIntegrationJob.succeeded ? "success" : "failure";
         String description = continuousIntegrationJob.succeeded ? "Build succeeded" : "Build failed";
-        String targetUrl = "https://dd2480-kth.fry.fyi/ci/" + request.getHeader("X-GitHub-Delivery") + "/";
+        String targetUrl = "https://dd2480-kth.fyr.fyi/ci/" + request.getHeader("X-GitHub-Delivery") + "/";
         String commitHash = continuousIntegrationJob.commitHash;
         HttpEntity resp = commitStatusHandler.setStatus(state, targetUrl, description, commitHash);
         System.out.println(new BufferedReader(new InputStreamReader(resp.getContent())).lines().collect(Collectors.joining("\n")));
