@@ -16,8 +16,9 @@ repositories {
 dependencies {
     implementation 'net.sargue:mailgun:1.10.0'
     implementation 'com.mashape.unirest:unirest-java:1.4.9'
-    implementation 'com.github.arteam:embedded-http-server:1.1'
-    testImplementation 'junit:junit:4.13.2'
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
+    implementation 'org.eclipse.jetty:jetty-server:10.0.8'
+    testImplementation 'junit:junit:4.+'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 }
