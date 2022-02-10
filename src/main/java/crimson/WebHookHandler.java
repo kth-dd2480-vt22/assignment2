@@ -28,6 +28,9 @@ public class WebHookHandler implements karmosin.WebHookHandler {
         ContinuousIntegrationJob job = new ContinuousIntegrationJob();
         if (request.getMethod().equals("POST")) {
             JSONObject json = new JSONObject(request.getReader().lines().collect(Collectors.joining()));
+            if (json.getString("after") == "0000000000000000000000000000000000000000"){
+                return null;
+            }
             String gitRef = json.getString("ref");
             String url = json.getJSONObject("repository").getString("url");
             URL repoUrl = new URL(url);
@@ -41,6 +44,7 @@ public class WebHookHandler implements karmosin.WebHookHandler {
             job.commitHash = commitHash;
             job.pusherName = pusherName;
             job.pusherEmail = pusherEmail;
+            job.jobID = request.getHeader("X-GitHub-Delivery");
         }
         return job;
     }

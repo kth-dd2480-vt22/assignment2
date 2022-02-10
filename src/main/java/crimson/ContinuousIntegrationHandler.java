@@ -41,9 +41,13 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
         response.setStatus(HttpServletResponse.SC_OK);
         baseRequest.setHandled(true);
 
+        if (job == null){
+            return;
+        }
+
         Runnable r = new Runnable() {
             public void run() {
-                String jobName = "";
+                String jobName = job.jobID;
 
                 try {
                     String tmpdir = Files.createTempDirectory("ci_job").toFile().getAbsolutePath();

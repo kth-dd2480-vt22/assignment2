@@ -24,6 +24,7 @@ With this information the CI-server then
 5. performs `gradle test`
 
 Finally, the pusher is notified by email if the job succeeded or not and in the case where it fails the error output is included in the email.
+
 ## How to use
 
 ## Team
