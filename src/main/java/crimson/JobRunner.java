@@ -91,8 +91,8 @@ public class JobRunner implements ContinuousIntegrationJobRunner {
         BufferedReader stdOutput = new BufferedReader(new InputStreamReader(process.getInputStream()));
         BufferedReader errOutput = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 
-        jobTaskOutput.StandardOutput = stdOutput.lines().collect(Collectors.joining());
-        jobTaskOutput.ErrorOutput = errOutput.lines().collect(Collectors.joining());
+        jobTaskOutput.StandardOutput = stdOutput.lines().collect(Collectors.joining("\n"));
+        jobTaskOutput.ErrorOutput = errOutput.lines().collect(Collectors.joining("\n"));
         
         continuousIntegrationJob.succeeded = jobTaskOutput.exitCode == 0;
 
