@@ -1,7 +1,12 @@
 package karmosin;
 
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.eclipse.jetty.server.Request;
+
+import javax.servlet.ServletException;
 
 public interface WebHookHandler {
     /**
@@ -13,13 +18,15 @@ public interface WebHookHandler {
      * @return
      * @throws Exception
      */
-    public ContinuousIntegrationJob parseEvent(HttpRequest request, HttpResponse response) throws Exception;
+    public ContinuousIntegrationJob parseEvent(String target, Request baseRequest, HttpServletRequest request,
+            HttpServletResponse response) throws IOException, ServletException;
 
     /**
      * responseEvent() response to an WebHook event (e.g. tell the status)
      * 
      * @throws Exception
      */
-    public void responseEvent(HttpRequest request, HttpResponse response,
-            ContinuousIntegrationJob continuousIntegrationJob) throws Exception;
+    public void responseEvent(String target, Request baseRequest, HttpServletRequest request,
+            HttpServletResponse response, ContinuousIntegrationJob continuousIntegrationJob)
+            throws IOException, ServletException;
 }
