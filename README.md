@@ -10,7 +10,7 @@ to automatically test a repository each time a new push event occurs.
 
 ##How to use
 
-##Way of working
+##Team
 
 ##Contributions
 
