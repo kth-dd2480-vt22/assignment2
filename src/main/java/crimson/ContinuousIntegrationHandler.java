@@ -51,6 +51,7 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
                     ContinuousIntegrationJobTaskOutput output;
 
                     output = runner.cloneRepo(job, tmpdir);
+                    System.out.println("clone: " + output.exitCode);
                     writeOutput(jobName, "clone", output);
                     if (output.exitCode != 0) {
                         emailer.emailResult(job);
@@ -58,6 +59,7 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
                     }
 
                     output = runner.runCheck(job, tmpdir);
+                    System.out.println("check: " + output.exitCode);
                     writeOutput(jobName, "check", output);
                     if (output.exitCode != 0) {
                         emailer.emailResult(job);
@@ -65,6 +67,7 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
                     }
 
                     output = runner.cloneRepo(job, tmpdir);
+                    System.out.println("test: " + output.exitCode);
                     writeOutput(jobName, "test", output);
                     if (output.exitCode != 0) {
                         emailer.emailResult(job);
@@ -72,6 +75,7 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
                     }
 
                     output = runner.cloneRepo(job, tmpdir);
+                    System.out.println("build: " + output.exitCode);
                     writeOutput(jobName, "build", output);
                     if (output.exitCode != 0) {
                         emailer.emailResult(job);
