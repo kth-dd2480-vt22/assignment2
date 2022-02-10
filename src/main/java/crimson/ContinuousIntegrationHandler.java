@@ -70,7 +70,7 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
                         return;
                     }
 
-                    output = runner.cloneRepo(job, tmpdir);
+                    output = runner.runTest(job, tmpdir);
                     System.out.println("test: " + output.exitCode);
                     System.out.println(output.ErrorOutput);
                     System.out.println(output.StandardOutput.toString());
@@ -80,7 +80,7 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
                         return;
                     }
 
-                    output = runner.cloneRepo(job, tmpdir);
+                    output = runner.runBuild(job, tmpdir);
                     System.out.println("build: " + output.exitCode);
                     System.out.println(output.ErrorOutput);
                     System.out.println(output.StandardOutput.toString());
