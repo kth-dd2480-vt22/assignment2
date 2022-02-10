@@ -11,6 +11,7 @@ public class ResultEmailer implements karmosin.ResultEmailer{
     public String pusherEmail;
     public boolean succeeded;
     public String message;
+    public String hash;
     private final String YOUR_DOMAIN_NAME;
     private final String API_KEY;
 
@@ -28,6 +29,8 @@ public class ResultEmailer implements karmosin.ResultEmailer{
 
         this.pusherEmail = continuousIntegrationJob.pusherEmail;
         this.succeeded = continuousIntegrationJob.succeeded;
+        this.hash = continuousIntegrationJob.commitHash;
+
         if (YOUR_DOMAIN_NAME == null || API_KEY == null) {
             return;
         } else {
@@ -43,10 +46,11 @@ public class ResultEmailer implements karmosin.ResultEmailer{
 
     public JsonNode sendSimpleMessage() throws UnirestException {
         if(this.succeeded){
-            message = "build launched successfully";
+            message = "Build LAUNCHED successfully. Commit hash is: " + hash;
         }else{
-            message = "build failed successfully";
+            message = "Build FAILED successfully. Commit hash is: " + hash;
         }
+
         HttpResponse<JsonNode> request = Unirest.post("https://api.mailgun.net/v3/" + YOUR_DOMAIN_NAME + "/messages")
             .basicAuth("api", API_KEY)
             .queryString("from", "Excited User filiplarsback@gmail.com")
