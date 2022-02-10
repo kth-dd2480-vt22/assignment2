@@ -82,7 +82,7 @@ public class JobRunner implements ContinuousIntegrationJobRunner {
         ContinuousIntegrationJobTaskOutput jobTaskOutput = new ContinuousIntegrationJobTaskOutput();
  
         ProcessBuilder builder = new ProcessBuilder();
-        builder.command(command);
+        builder.command(command.split(" "));
         builder.directory(new File(targetLocation));
         Process process = builder.start();
         int exitCode = process.waitFor();
