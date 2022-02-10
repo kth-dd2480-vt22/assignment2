@@ -38,6 +38,8 @@ is stuck on any particular issue, the team is notified and a solution is created
 
 #### Siyao Liu
 
+Implemented the WebHookHandler class which parses the http request containing the push event to output the job for the CI-server to hand over to JobRunner, and sets the commit status in order to support the notification of CI results. Also discussed the Team section with Philip.
+
 #### Edwin So
 
 #### Filip Bäck
