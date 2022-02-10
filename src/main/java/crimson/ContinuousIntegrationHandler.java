@@ -41,6 +41,10 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
         response.setStatus(HttpServletResponse.SC_OK);
         baseRequest.setHandled(true);
 
+        if (job == null){
+            return;
+        }
+
         Runnable r = new Runnable() {
             public void run() {
                 String jobName = job.jobID;
