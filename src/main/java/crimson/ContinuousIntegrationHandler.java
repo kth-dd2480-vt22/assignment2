@@ -38,52 +38,62 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
             HttpServletResponse response) throws IOException, ServletException {
         ContinuousIntegrationJob job = handler.parseEvent(target, baseRequest, request, response);
 
-        String jobName = "";
+        response.setStatus(HttpServletResponse.SC_OK);
+        baseRequest.setHandled(true);
 
-        try {
-            String tmpdir = Files.createTempDirectory("ci_job").toFile().getAbsolutePath();
+        Runnable r = new Runnable() {
+            public void run() {
+                String jobName = "";
 
-            ContinuousIntegrationJobTaskOutput output;
+                try {
+                    String tmpdir = Files.createTempDirectory("ci_job").toFile().getAbsolutePath();
 
-            output = this.runner.cloneRepo(job, tmpdir);
-            writeOutput(jobName, "clone", output);
-            if (output.exitCode != 0) {
-                emailer.emailResult(job);
-                return;
+                    ContinuousIntegrationJobTaskOutput output;
+
+                    output = runner.cloneRepo(job, tmpdir);
+                    writeOutput(jobName, "clone", output);
+                    if (output.exitCode != 0) {
+                        emailer.emailResult(job);
+                        return;
+                    }
+
+                    output = runner.runCheck(job, tmpdir);
+                    writeOutput(jobName, "check", output);
+                    if (output.exitCode != 0) {
+                        emailer.emailResult(job);
+                        return;
+                    }
+
+                    output = runner.cloneRepo(job, tmpdir);
+                    writeOutput(jobName, "test", output);
+                    if (output.exitCode != 0) {
+                        emailer.emailResult(job);
+                        return;
+                    }
+
+                    output = runner.cloneRepo(job, tmpdir);
+                    writeOutput(jobName, "build", output);
+                    if (output.exitCode != 0) {
+                        emailer.emailResult(job);
+                        return;
+                    }
+
+                    job.succeeded = true;
+
+                    emailer.emailResult(job);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ServletException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
+        };
 
-            output = this.runner.runCheck(job, tmpdir);
-            writeOutput(jobName, "check", output);
-            if (output.exitCode != 0) {
-                emailer.emailResult(job);
-                return;
-            }
+        new Thread(r).start();
 
-            output = this.runner.cloneRepo(job, tmpdir);
-            writeOutput(jobName, "test", output);
-            if (output.exitCode != 0) {
-                emailer.emailResult(job);
-                return;
-            }
-
-            output = this.runner.cloneRepo(job, tmpdir);
-            writeOutput(jobName, "build", output);
-            if (output.exitCode != 0) {
-                emailer.emailResult(job);
-                return;
-            }
-
-            job.succeeded = true;
-
-            emailer.emailResult(job);
-
-        } catch (IOException e) {
-            throw e;
-        } catch (ServletException e) {
-            throw e;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     void writeOutput(String jobName, String taskName, ContinuousIntegrationJobTaskOutput output) {
