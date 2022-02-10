@@ -17,6 +17,7 @@ dependencies {
     implementation 'net.sargue:mailgun:1.10.0'
     implementation 'com.mashape.unirest:unirest-java:1.4.9'
     implementation 'javax.servlet:javax.servlet-api:4.0.1'
+    implementation 'org.eclipse.jgit:org.eclipse.jgit:5.4.2.201908231537-r'
     implementation 'org.eclipse.jetty:jetty-server:10.0.8'
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
