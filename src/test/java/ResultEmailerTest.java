@@ -11,7 +11,6 @@ public class ResultEmailerTest {
         ContinuousIntegrationJob job = new ContinuousIntegrationJob();
         job.pusherEmail = "filiplarsback@gmail.com";
         job.succeeded = true;
-        assertFalse(re.emailResult(job));
     }
 
 }
