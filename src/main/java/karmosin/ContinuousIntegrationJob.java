@@ -3,6 +3,7 @@ package karmosin;
 import java.net.URL;
 
 public class ContinuousIntegrationJob {
+    public String jobID;
     /**
      * repoGitUrl is the URL of the git repo that the job belongs to.
      */
