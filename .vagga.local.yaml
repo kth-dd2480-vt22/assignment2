@@ -1,0 +1,29 @@
+containers:
+  java:
+    setup:
+      - !Alpine v3.11
+      - !Repo edge/community
+      - !Install
+        - openjdk11
+        - gradle
+        - git
+    environ-file: /work/.vagga.env
+    environ:
+      JAVA_HOME: /usr/lib/jvm/default-jvm
+      GRADLE_USER_HOME: /work/.gradle
+      HOME: /work
+    volumes:
+      /root: !Tmpfs
+
+commands:
+  java: !Command
+    container: java
+    run: [java]
+
+  terminal-java: !Command
+    container: java
+    run: [sh]
+
+  run: !Command
+    container: java
+    run: [gradle, run]
