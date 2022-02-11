@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ResultEmailerTest {
 
     @Test
-    public void testEmailer() {
+    public void testEmailer(){
         ResultEmailer re = new ResultEmailer();
         ContinuousIntegrationJob job = new ContinuousIntegrationJob();
         job.pusherEmail = "filiplarsback@gmail.com";
