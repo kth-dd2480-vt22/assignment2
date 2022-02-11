@@ -1,5 +1,8 @@
 package crimson;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Date;
@@ -8,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
+import org.eclipse.jetty.util.IO;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
@@ -52,6 +56,9 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
                 try {
                     String tmpdir = Files.createTempDirectory("ci_job").toFile().getAbsolutePath();
 
+                    File f = new File(ciJobDir + "/" + jobName);
+                    f.mkdir();
+
                     ContinuousIntegrationJobTaskOutput output;
 
                     output = runner.cloneRepo(job, tmpdir);
@@ -60,6 +67,7 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
                     System.out.println(output.StandardOutput.toString());
                     writeOutput(jobName, "clone", output);
                     if (output.exitCode != 0) {
+                        writeJobStatus(jobName, job);
                         handler.responseEvent(target, baseRequest, request, response, job);
                         emailer.emailResult(job);
                         return;
@@ -71,6 +79,7 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
                     System.out.println(output.StandardOutput.toString());
                     writeOutput(jobName, "check", output);
                     if (output.exitCode != 0) {
+                        writeJobStatus(jobName, job);
                         handler.responseEvent(target, baseRequest, request, response, job);
                         emailer.emailResult(job);
                         return;
@@ -82,6 +91,7 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
                     System.out.println(output.StandardOutput.toString());
                     writeOutput(jobName, "test", output);
                     if (output.exitCode != 0) {
+                        writeJobStatus(jobName, job);
                         handler.responseEvent(target, baseRequest, request, response, job);
                         emailer.emailResult(job);
                         return;
@@ -93,12 +103,15 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
                     System.out.println(output.StandardOutput.toString());
                     writeOutput(jobName, "build", output);
                     if (output.exitCode != 0) {
+                        writeJobStatus(jobName, job);
                         handler.responseEvent(target, baseRequest, request, response, job);
                         emailer.emailResult(job);
                         return;
                     }
 
                     job.succeeded = true;
+
+                    writeJobStatus(jobName, job);
 
                     handler.responseEvent(target, baseRequest, request, response, job);
 
@@ -118,8 +131,26 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
 
     }
 
-    void writeOutput(String jobName, String taskName, ContinuousIntegrationJobTaskOutput output) {
-        // TODO: for presistance build
+    void writeOutput(String jobName, String taskName, ContinuousIntegrationJobTaskOutput output) throws IOException {
+        BufferedWriter writer = new BufferedWriter(
+                new FileWriter(ciJobDir + "/" + jobName + "/" + taskName + ".stdout"));
+        writer.write(output.StandardOutput);
+        writer.close();
+
+        writer = new BufferedWriter(new FileWriter(ciJobDir + "/" + jobName + "/" + taskName + ".errout"));
+        writer.write(output.ErrorOutput);
+        writer.close();
+
+        writer = new BufferedWriter(new FileWriter(ciJobDir + "/" + jobName + "/" + taskName + ".status"));
+        writer.write(output.exitCode);
+        writer.close();
+    }
+
+    void writeJobStatus(String jobName, ContinuousIntegrationJob job) throws IOException {
+        BufferedWriter writer = new BufferedWriter(
+                new FileWriter(ciJobDir + "/" + jobName + "/" + "status"));
+        writer.write(String.valueOf(job.succeeded));
+        writer.close();
     }
 
 }

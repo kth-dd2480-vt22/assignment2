@@ -6,6 +6,7 @@ import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.Slf4jRequestLogWriter;
 import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
+import org.eclipse.jetty.server.handler.ResourceHandler;
 
 import karmosin.ContinuousIntegrationJobRunner;
 import karmosin.ResultEmailer;
@@ -22,6 +23,15 @@ public class Server implements karmosin.Server {
         this.runner = runner;
         this.emailer = emailer;
         this.ciJobDir = ciJobDir;
+
+        ResourceHandler rh = new ResourceHandler();
+        rh.setDirAllowed(true);
+        rh.setResourceBase(ciJobDir);
+
+        ContextHandler contextHandler = new ContextHandler("/ci");
+        contextHandler.setHandler(rh);
+
+        handler.addHandler(contextHandler);
     }
 
     public void addWebHookHandler(String path, WebHookHandler handler) {
