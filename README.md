@@ -42,6 +42,8 @@ Implemented the WebHookHandler class which parses the http request containing th
 
 #### Edwin So
 
+Implemented code skeleton (karmosin), fix JobRunner's bug, implemented Server, Main, ContinuousIntegrationHandler. Setup gradle. Designed the fundamental archtecture of the system. 
+
 #### Filip Bäck
 
 #### Tobias Gabi Goobar
