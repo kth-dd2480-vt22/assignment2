@@ -33,7 +33,8 @@ public class WebHookHandler implements karmosin.WebHookHandler {
      * @param request
      * @param response
      * @return
-     * @throws Exception
+     * @throws IOException
+     * @throws ServletException
      */
     @Override
     public ContinuousIntegrationJob parseEvent(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -69,7 +70,8 @@ public class WebHookHandler implements karmosin.WebHookHandler {
      * @param request
      * @param response
      * @param continuousIntegrationJob
-     * @throws Exception
+     * @throws IOException
+     * @throws ServletException
      */
     @Override
     public void responseEvent(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response, ContinuousIntegrationJob continuousIntegrationJob) throws IOException, ServletException {
