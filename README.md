@@ -27,6 +27,14 @@ Finally, the pusher is notified by email if the job succeeded or not and in the 
 
 ## How to use
 
+- install gradle and java
+- set env vars and export the following
+    - GITHUB_USERNAME
+    - GITHUB_REPOSTATUSURL
+    - GITHUB_TOKEN
+- create dir `.ci` for build state storing
+- run `gradle run`
+
 ## Team
 Currently, we've identified ourselves being in the state of 'Performance'. This means that the team is meeting its commitments,
 continuously adapting to changing contexts, as well as identifying and addressing problems without outside help. The work
