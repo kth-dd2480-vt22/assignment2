@@ -53,6 +53,8 @@ Implemented the WebHookHandler class which parses the http request containing th
 Implemented code skeleton (karmosin), fix JobRunner's bug, implemented Server, Main, ContinuousIntegrationHandler. Setup gradle. Designed the fundamental archtecture of the system. 
 
 #### Filip Bäck
+Implemented the ResultEmailer class which includes a Mailgun API endpoint which sends e-mail with
+relevant build information once a push event occurs.
 
 #### Tobias Gabi Goobar
 
