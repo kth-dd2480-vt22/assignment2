@@ -7,6 +7,7 @@
 
 plugins{
     id 'java'
+    id 'application'
 }
 
 repositories {
@@ -24,11 +25,8 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
     implementation 'org.json:json:20211205'
     implementation 'org.springframework:spring-test:5.3.15'
+    implementation 'org.slf4j:slf4j-simple:2.0.0-alpha6'
     implementation 'io.github.cdimascio:java-dotenv:3.1.7'
-}
-
-test {
-    useJUnitPlatform()
 }
 
 sourceCompatibility = JavaVersion.VERSION_11
@@ -36,4 +34,12 @@ targetCompatibility = JavaVersion.VERSION_11
 
 test {
     useJUnitPlatform()
+}
+
+ext {
+    javaMainClass = "Main"
+}
+
+application {
+    mainClassName = javaMainClass
 }
