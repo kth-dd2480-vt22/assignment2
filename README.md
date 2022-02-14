@@ -35,6 +35,11 @@ Finally, the pusher is notified by email if the job succeeded or not and in the 
 - create dir `.ci` for build state storing
 - run `gradle run`
 
+## How to test
+
+- install gradle and java
+- run `gradle test`
+
 ## Team
 Currently, we've identified ourselves being in the state of 'Performance'. This means that the team is meeting its commitments,
 continuously adapting to changing contexts, as well as identifying and addressing problems without outside help. The work
