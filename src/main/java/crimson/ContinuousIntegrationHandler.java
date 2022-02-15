@@ -60,6 +60,8 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
                     File f = new File(ciJobDir + "/" + jobName);
                     f.mkdir();
 
+                    writeCommitHash(jobName, job.commitHash);
+
                     ContinuousIntegrationJobTaskOutput output;
 
                     output = runner.cloneRepo(job, tmpdir);
@@ -157,6 +159,13 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
         BufferedWriter writer = new BufferedWriter(
                 new FileWriter(ciJobDir + "/" + jobName + "/" + "status"));
         writer.write(String.valueOf(job.succeeded));
+        writer.close();
+    }
+
+    void writeCommitHash(String jobName, String commitHash) throws IOException{
+        BufferedWriter writer = new BufferedWriter(
+            new FileWriter(ciJobDir + "/" + jobName + "/" + "commit"));
+        writer.write(commitHash);
         writer.close();
     }
 
