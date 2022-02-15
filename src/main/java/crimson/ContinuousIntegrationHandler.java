@@ -54,7 +54,8 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
                 String jobName = job.jobID;
 
                 try {
-                    String tmpdir = Files.createTempDirectory("ci_job").toFile().getAbsolutePath();
+                    File tmpDirF = Files.createTempDirectory("ci_job").toFile();
+                    String tmpdir = tmpDirF.getAbsolutePath();
 
                     File f = new File(ciJobDir + "/" + jobName);
                     f.mkdir();
@@ -67,6 +68,7 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
                     System.out.println(output.StandardOutput.toString());
                     writeOutput(jobName, "clone", output);
                     if (output.exitCode != 0) {
+                        tmpDirF.delete();
                         writeJobStatus(jobName, job);
                         handler.responseEvent(target, baseRequest, request, response, job);
                         emailer.emailResult(job);
@@ -79,6 +81,7 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
                     System.out.println(output.StandardOutput.toString());
                     writeOutput(jobName, "check", output);
                     if (output.exitCode != 0) {
+                        tmpDirF.delete();
                         writeJobStatus(jobName, job);
                         handler.responseEvent(target, baseRequest, request, response, job);
                         emailer.emailResult(job);
@@ -91,6 +94,7 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
                     System.out.println(output.StandardOutput.toString());
                     writeOutput(jobName, "test", output);
                     if (output.exitCode != 0) {
+                        tmpDirF.delete();
                         writeJobStatus(jobName, job);
                         handler.responseEvent(target, baseRequest, request, response, job);
                         emailer.emailResult(job);
@@ -103,6 +107,7 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
                     System.out.println(output.StandardOutput.toString());
                     writeOutput(jobName, "build", output);
                     if (output.exitCode != 0) {
+                        tmpDirF.delete();
                         writeJobStatus(jobName, job);
                         handler.responseEvent(target, baseRequest, request, response, job);
                         emailer.emailResult(job);
@@ -110,6 +115,8 @@ public class ContinuousIntegrationHandler extends AbstractHandler {
                     }
 
                     job.succeeded = true;
+
+                    tmpDirF.delete();
 
                     writeJobStatus(jobName, job);
 
