@@ -23,7 +23,8 @@ With this information the CI-server then
 4. performs `gradle build`
 5. performs `gradle test`
 
-Finally, the pusher is notified by email if the job succeeded or not and in the case where it fails the error output is included in the email.
+Finally, the commit status will serve as notification of CI results and be set automatically denoting whether the job succeeded or not. If you click on it, you will be redirected to the build's unique URL, that is accessible to get the build information. And by going one level up, you will go to the URL that lists all builds, which is also given here below.  
+<https://dd2480-kth.fyr.fyi/ci/>
 
 ## How to use
 
